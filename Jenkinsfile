@@ -25,16 +25,14 @@ pipeline {
         echo 'Testing Stage'
       }
     }
-    stage('Deploy') {
-      agent {
-        node {
-          label 'java7'
-        }
-        
-      }
+    stage('Confirm Deploy') {
       steps {
-        unstash 'Java 8'
-        echo 'Deploying Stage'
+        input(message: 'Okay to Deploy to Staging?', ok: 'Let\'s Do it!')
+      }
+    }
+    stage('Deploy') {
+      steps {
+        echo 'Deploying'
       }
     }
   }
