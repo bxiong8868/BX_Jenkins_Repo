@@ -7,8 +7,17 @@ pipeline {
       }
     }
     stage('Test') {
-      steps {
-        echo 'Testing Stage'
+      parallel {
+        stage('Test') {
+          steps {
+            echo 'Testing Stage'
+          }
+        }
+        stage('Publish JUnit Test results report') {
+          steps {
+            junit '**/surefire-reports/**/*.xml'
+          }
+        }
       }
     }
     stage('Deploy') {
