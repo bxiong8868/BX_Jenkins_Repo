@@ -4,21 +4,12 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Building Stage'
+        echo '$BUZZ_NAME'
       }
     }
-    stage('Test') {
-      parallel {
-        stage('Test') {
-          steps {
-            echo 'Testing Stage'
-          }
-        }
-        stage('Publish JUnit Test results report') {
-          steps {
-            echo 'Testing Stage result'
-            junit '**/surefire-reports/**/*.xml'
-          }
-        }
+    stage('Publish JUnit Test results report') {
+      steps {
+        echo 'Testing Stage result'
       }
     }
     stage('Deploy') {
@@ -26,5 +17,8 @@ pipeline {
         echo 'Deploying Stage'
       }
     }
+  }
+  environment {
+    BUZZ_NAME = 'Worker Bee'
   }
 }
